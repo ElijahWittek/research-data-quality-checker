@@ -1,0 +1,26 @@
+# Virtual enviroment
+.venv/
+
+# Python cache
+__pycache__/
+*.py[cod]
+
+# Test und tooling caches
+.pytest_cache/
+.ruff_cache
+
+# Environment variables and secrets
+.env
+.env.*
+
+# IDE settings
+.vscode/
+.idea/
+
+# Operating system files
+Thumbs.db
+.DS_Store
+
+# Genaerated output
+output/
+reports/
