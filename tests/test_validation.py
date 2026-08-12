@@ -8,6 +8,8 @@ from research_data_quality_checker.validation import (
     is_positive_integer,
     is_valid_date,
     is_within_range,
+    validate_dataset,
+    validate_row,
 )
 
 
@@ -268,3 +270,109 @@ def test_non_numeric_value_is_not_reported_as_out_of_range():
     result = get_out_of_range_values(row)
 
     assert result == []
+
+def test_valid_row_has_no_findings():
+    row = {
+        "measurement_id": "1001",
+        "station_id": "BERLIN_01",
+        "measurement_date": "2026-08-11",
+        "temperature_c": "24.7",
+        "humidity_percent": "58.0",
+        "pressure_hpa": "1012.4",
+    }
+
+    result = validate_row(row, 2)
+
+    assert result == []
+
+def test_validate_row_collects_multiple_findings():
+    row = {
+        "measurement_id": "1001",
+        "station_id": "",
+        "measurement_date": "2026-02-30",
+        "temperature_c": "61.2",
+        "humidity_percent": "58.0",
+        "pressure_hpa": "1012.4",
+    }
+
+    result = validate_row(row, 2)
+
+    assert len(result) == 3
+
+    assert result[0]["type"] == "missing_value"
+    assert result[0]["column"] == "station_id"
+
+    assert result[1]["type"] == "invalid_date"
+    assert result[1]["column"] == "measurement_date"
+
+    assert result[2]["type"] == "out_of_range"
+    assert result[2]["column"] == "temperature_c"
+
+def test_valid_dataset_has_no_findings():
+    columns = [
+        "measurement_id",
+        "station_id",
+        "measurement_date",
+        "temperature_c",
+        "humidity_percent",
+        "pressure_hpa",
+    ]
+
+    rows = [
+        {
+            "measurement_id": "1001",
+            "station_id": "BERLIN_01",
+            "measurement_date": "2026-08-10",
+            "temperature_c": "24.7",
+            "humidity_percent": "58.0",
+            "pressure_hpa": "1012.4",
+        },
+        {
+            "measurement_id": "1002",
+            "station_id": "POTSDAM_01",
+            "measurement_date": "2026-08-11",
+            "temperature_c": "25.2",
+            "humidity_percent": "55.3",
+            "pressure_hpa": "1011.6",
+        },
+    ]
+
+    result = validate_dataset(columns, rows)
+
+    assert result == []
+
+def test_dataset_collects_structural_row_and_duplicate_findings():
+    columns = [
+        "measurement_id",
+        "station_id",
+        "measurement_date",
+        "temperature_c",
+        "humidity_percent",
+    ]
+
+    rows = [
+        {
+            "measurement_id": "1001",
+            "station_id": "BERLIN_01",
+            "measurement_date": "2026-08-10",
+            "temperature_c": "24.7",
+            "humidity_percent": "58.0",
+        },
+        {
+            "measurement_id": "1001",
+            "station_id": "",
+            "measurement_date": "2026-02-30",
+            "temperature_c": "61.2",
+            "humidity_percent": "55.0",
+        },
+    ]
+
+    result = validate_dataset(columns, rows)
+
+    finding_types = [finding["type"] for finding in result]
+
+    assert "missing_column" in finding_types
+    assert "duplicate_measurement_id" in finding_types
+    assert "missing_value" in finding_types
+    assert "invalid_date" in finding_types
+    assert "out_of_range" in finding_types
