@@ -9,6 +9,11 @@ __pycache__/
 .pytest_cache/
 .ruff_cache
 
+# Python packaging
+*.egg-info/
+build/
+dist/
+
 # Environment variables and secrets
 .env
 .env.*

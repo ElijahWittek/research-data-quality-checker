@@ -52,12 +52,15 @@ def main(
 
     return 0
 
-if __name__ == "__main__":
+def cli() -> None:
     if len(sys.argv) != 2:
         print(
-            "Usage: python -m research_data_quality_checker.main "
+            "Usage: research-data-quality-checker "
             "<csv-file>"
         )
         raise SystemExit(1)
-
+    
     raise SystemExit(main(sys.argv[1]))
+
+if __name__ == "__main__":
+    cli()

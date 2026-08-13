@@ -1,3 +1,20 @@
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "research-data-quality-checker"
+version = "0.1.0"
+description = "A command-line tool for validating meteorological research data in CSV files."
+readme = "README.md"
+requires-python = ">=3.14"
+
+[project.scripts]
+research-data-quality-checker = "research_data_quality_checker.main:cli"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
 [tool.pytest.ini_options]
 pythonpath = ["src"]
 testpaths = ["tests"]
