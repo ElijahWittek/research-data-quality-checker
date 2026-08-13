@@ -21,6 +21,7 @@ __pycache__/
 Thumbs.db
 .DS_Store
 
-# Genaerated output
+# Generated output
 output/
 reports/
+validation_report.txt

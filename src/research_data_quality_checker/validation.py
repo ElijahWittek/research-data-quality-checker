@@ -119,7 +119,7 @@ def validate_row(
                 "measurement_id": measurement_id,
                 "column": column,
                 "value": row[column],
-                "discription": "Required value is missing.",
+                "description": "Required value is missing.",
             }
         )
 
@@ -134,7 +134,7 @@ def validate_row(
                     "measurement_id": measurement_id,
                     "column": "measurement_id",
                     "value": value,
-                    "discription": "Value must be a positive integer.",
+                    "description": "Value must be a positive integer.",
                 }
             )
 
@@ -149,7 +149,7 @@ def validate_row(
                     "measurement_id": measurement_id,
                     "column": "measurement_date",
                     "value": value,
-                    "discription": "Value must be a valid date in YYYY-MM-DD format.",
+                    "description": "Value must be a valid date in YYYY-MM-DD format.",
                 }
             )
 
@@ -167,7 +167,7 @@ def validate_row(
                     "measurement_id": measurement_id,
                     "column": column,
                     "value": value,
-                    "discription": "Value must be a valid decimal number.",
+                    "description": "Value must be a valid decimal number.",
                 }
             )
             continue
@@ -180,7 +180,7 @@ def validate_row(
                     "measurement_id": measurement_id,
                     "column": column,
                     "value": value,
-                    "discription": (
+                    "description": (
                         f"Value must be between {lower_bound} "
                         f"and {upper_bound}, inclusive."
                     ),
