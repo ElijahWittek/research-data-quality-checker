@@ -208,6 +208,7 @@ research-data-quality-checker/
 │   ├── test_report.py
 │   └── test_validation.py
 ├── .gitignore
+├── LICENSE
 ├── pyproject.toml
 └── README.md
 ```
@@ -282,3 +283,7 @@ Its purpose is to practise fundamental software-development skills in a research
 - structured technical documentation
 
 The project also serves as an introduction to an important principle of research software: data should be checked for structural and plausibility problems before further analysis or visualization.
+
+## License
+
+This project is licensed under the MIT License. See [LICENSE](LICENSE) for details.
